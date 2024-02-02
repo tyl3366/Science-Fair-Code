@@ -12,8 +12,8 @@ features = ['Extraverted',
             'Intuitive', 
             'Thinking', 
             'Judging', 
-            'Assertive', 
-            'SAT', 
+            'Assertive',
+            'SAT',  
             '0',
             '1',
             '2',
@@ -22,7 +22,8 @@ features = ['Extraverted',
             '5',
             '6',
             '7',
-            '8']
+            '8',]
+            # 'Age'
 
 targets = ['Math', 
            'English', 
@@ -35,10 +36,14 @@ y = data.Math
 
 x_train, x_valid, y_train, y_valid = train_test_split(x, y, train_size=0.9, random_state=0)
 
+# Random Forest Model
+# Initial MAE: 4.00
 # model = RandomForestRegressor(n_estimators=100, random_state=0)
 
 # model.fit(x_train, y_train)
 
+# XGBoost Model 
+# Initial MAE: 3.19
 model = XGBRegressor(n_estimators=1000, random_state=0)
 
 model.fit(x_train, y_train,
