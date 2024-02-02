@@ -7,6 +7,7 @@ from sklearn.preprocessing import OneHotEncoder
 from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
 from sklearn.model_selection import cross_val_score
+from xgboost import XGBRegressor
 
 
 data_file_path = "raw_data.csv"
@@ -31,6 +32,9 @@ targets = ['Math',
 
 x = data[features]
 y = data.Math
+
+print(x.columns)
+print(y)
 
 x_train, x_valid, y_train, y_valid = train_test_split(x, y, train_size=0.9, random_state=0)
 

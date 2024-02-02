@@ -3,6 +3,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_absolute_error as mae
 import tensorflow as tf
+from xgboost import XGBRegressor
 
 
 data_file_path = "playing_data.csv"
@@ -32,12 +33,20 @@ targets = ['Math',
 y = data.English
 X = data[testing_features]
 
-x_train, x_val, y_train, y_val = train_test_split(X, y, train_size=0.7, random_state=0)
+x_train, x_valid, y_train, y_valid = train_test_split(X, y, train_size=0.9, random_state=0)
 
-model = RandomForestRegressor(random_state=1)
+# Did better with Random Forest than XGBoost
+# model = XGBRegressor(n_estimators=1000, random_state=0)
+
+# model.fit(x_train, y_train,
+#            early_stopping_rounds=5, 
+#              eval_set=[(x_valid, y_valid)],
+#              verbose=False)
+
+model = RandomForestRegressor(n_estimators=500, random_state=0)
 
 model.fit(x_train, y_train)
 
-val_mae = mae(y_val, model.predict(x_val))
+val_mae = mae(y_valid, model.predict(x_valid))
 
 print("MAE: {}".format(val_mae))
