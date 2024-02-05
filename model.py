@@ -4,6 +4,8 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_absolute_error as mae
 from xgboost import XGBRegressor
 from sklearn.multioutput import MultiOutputRegressor
+from sklearn.model_selection import cross_val_score
+from sklearn.pipeline import Pipeline
 
 data_file_path = "clean_data.csv"
 data = pd.read_csv(data_file_path)
@@ -37,21 +39,17 @@ y = data[targets]
 x_train, x_valid, y_train, y_valid = train_test_split(x, y, train_size=0.9, random_state=0)
 
 # Random Forest Model
-# Initial MAE: 4.00
+# Initial MAE: 4.76
 model = MultiOutputRegressor(RandomForestRegressor(n_estimators=100, random_state=0)).fit(x_train, y_train)
 
-# model.fit(x_train, y_train)
-
 # XGBoost Model 
-# Initial MAE: 3.19
-# model = XGBRegressor(n_estimators=1000, random_state=0)
+# Cross-Val MAE: 4.90
+# model = MultiOutputRegressor(XGBRegressor(n_estimators=500, random_state=0)).fit(x_train, y_train)
 
-# model.fit(x_train, y_train,
-#            early_stopping_rounds=5, 
-#              eval_set=[(x_valid, y_valid)],
-#              verbose=False)
+my_pipeline = Pipeline(steps=[('model', model)])
 
-val_mae = mae(y_valid, model.predict(x_valid))
+scores = -1 * cross_val_score(my_pipeline, x, y,
+                              cv=5,
+                              scoring='neg_mean_absolute_error')
 
-print(str(model.predict(x_valid)))
-print("MAE: {}".format(val_mae))
+print("MAE: " + str(scores.mean()))
