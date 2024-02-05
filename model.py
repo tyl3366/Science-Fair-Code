@@ -36,7 +36,7 @@ features = ['Extraverted',
             '7',
             '8',]
 
-# Predictin targets
+# Predicting targets
 targets = ['Math', 
            'English', 
            'Science', 
