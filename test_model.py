@@ -6,7 +6,7 @@ import tensorflow as tf
 from xgboost import XGBRegressor
 
 
-data_file_path = "playing_data.csv"
+data_file_path = "test_data.csv"
 data = pd.read_csv(data_file_path)
 
 # print(data.columns)
