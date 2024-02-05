@@ -45,6 +45,10 @@ y = data[targets]
 
 x_train, x_valid, y_train, y_valid = train_test_split(x, y, train_size=0.9, random_state=0)
 
+# Neural Network Regressor
+# MAE: 7.06
+# model = MultiOutputRegressor(MLPRegressor(random_state=0, max_iter=500)).fit(x_train, y_train)
+
 # Random Forest Model
 # MAE: 4.76
 # model = MultiOutputRegressor(RandomForestRegressor(n_estimators=100, random_state=0)).fit(x_train, y_train)
@@ -63,11 +67,7 @@ x_train, x_valid, y_train, y_valid = train_test_split(x, y, train_size=0.9, rand
 
 # AdaBoost Regressor 
 # MAE: 4.52
-# model = MultiOutputRegressor(AdaBoostRegressor(learning_rate=0.001, random_state=0)).fit(x_train, y_train)
-
-# Neural Network Regressor
-# MAE: 7.06
-model = MultiOutputRegressor(MLPRegressor(random_state=0, max_iter=500)).fit(x_train, y_train)
+model = MultiOutputRegressor(AdaBoostRegressor(learning_rate=0.001, random_state=0)).fit(x_train, y_train)
 
 pipeline = Pipeline(steps=[('model', model)])
 
