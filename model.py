@@ -15,9 +15,11 @@ from sklearn.ensemble import ExtraTreesRegressor
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.neural_network import MLPRegressor
 
+# Import data
 data_file_path = "clean_data.csv"
 data = pd.read_csv(data_file_path)
 
+# Features to be used for prediction
 features = ['Extraverted', 
             'Intuitive', 
             'Thinking', 
@@ -34,15 +36,18 @@ features = ['Extraverted',
             '7',
             '8',]
 
+# Predictin targets
 targets = ['Math', 
            'English', 
            'Science', 
            'Art', 
            'History']
 
+# Create x and y datasets
 x = data[features]
 y = data[targets]
 
+# Split data
 x_train, x_valid, y_train, y_valid = train_test_split(x, y, train_size=0.9, random_state=0)
 
 # Neural Network Regressor
@@ -69,8 +74,11 @@ x_train, x_valid, y_train, y_valid = train_test_split(x, y, train_size=0.9, rand
 # MAE: 4.52
 model = MultiOutputRegressor(AdaBoostRegressor(learning_rate=0.001, random_state=0)).fit(x_train, y_train)
 
+# Create pipline for cross validation
 pipeline = Pipeline(steps=[('model', model)])
 
+# Cross validation score
 scores = -1 * cross_val_score(pipeline, x, y, cv=5, scoring='neg_mean_absolute_error')
 
+# Print validation score
 print("MAE: " + str(scores.mean()))
