@@ -23,9 +23,9 @@ data = pd.read_csv(data_file_path)
 features = ['Extraverted', 
             'Intuitive', 
             'Thinking', 
-            'Judging', 
+            'Judging',
             'Assertive',
-            'SAT',  
+            'SAT',
             '0',
             '1',
             '2',
@@ -34,7 +34,7 @@ features = ['Extraverted',
             '5',
             '6',
             '7',
-            '8',]
+            '8']
 
 # Predicting targets
 targets = ['Math', 
@@ -82,3 +82,4 @@ scores = -1 * cross_val_score(pipeline, x, y, cv=5, scoring='neg_mean_absolute_e
 
 # Print validation score
 print("MAE: " + str(scores.mean()))
+print(model.predict(x_valid))
